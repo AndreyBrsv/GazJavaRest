@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id("org.springframework.boot") version "2.2.8.RELEASE"
+    id("io.spring.dependency-management") version "1.0.9.RELEASE"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
+    compile group: 'io.projectreactor', name: 'reactor-core', version: '3.3.7.RELEASE'
+
+    // https://mvnrepository.com/artifact/io.r2dbc/r2dbc-h2
+    testCompile group: 'io.r2dbc', name: 'r2dbc-h2', version: '0.8.4.RELEASE'
+}

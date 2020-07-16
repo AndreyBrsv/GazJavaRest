@@ -1,0 +1,7 @@
+dbconfig:
+  driver: 'h2'
+  protocol: ''
+  host: ''
+  user: ''
+  password: ''
+  database: ''
