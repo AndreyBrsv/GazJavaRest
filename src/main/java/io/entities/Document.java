@@ -2,15 +2,20 @@ package io.entities;
 
 import lombok.*;
 
-import java.time.Instant;
+import java.sql.Timestamp;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Document {
     private long id;
     private long documentNumber;
-    private Instant openDate;
+    private Timestamp openDate;
     private String companyName;
     private String inn;
     private String kpp;
+
+    public Document copy() {
+        return new Document(this.id, this.documentNumber, this.openDate, this.companyName, this.inn, this.kpp);
+    }
 }

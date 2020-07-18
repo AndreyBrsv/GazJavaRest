@@ -1,11 +1,11 @@
 package io.dao;
 
 public interface Repository<Entity, Identifier> {
-    Entity create(Entity t);
+    Entity create(Entity entity);
 
-    Entity get(Identifier i);
+    Entity get(Identifier identifier);
 
-    Entity update(Entity t);
+    Entity update(Entity entity);
 
-    boolean delete(Identifier i);
+    boolean delete(Identifier identifier);
 }
