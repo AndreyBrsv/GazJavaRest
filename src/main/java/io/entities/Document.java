@@ -1,17 +1,24 @@
 package io.entities;
 
 import lombok.*;
+import org.springframework.lang.NonNull;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @RequiredArgsConstructor
 @Builder
 @Getter
 public class Document {
-    private long id;
-    private long documentNumber;
-    private LocalDate openDate;
-    private String companyName;
-    private String inn;
-    private String kpp;
+
+    private final long id;
+
+    private final String documentNumber;
+
+    private final Instant openDate;
+
+    private final String companyName;
+
+    private final String inn;
+
+    private final String kpp;
 }

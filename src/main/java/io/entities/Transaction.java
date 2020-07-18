@@ -4,17 +4,24 @@ package io.entities;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Builder
 @Getter
 public class Transaction {
-    private long id;
-    private long documentId;
-    private long uuid;
-    private LocalDateTime time;
-    private long sum;
-    private long transactionFee;
+    private final long id;
+    private final long documentId;
+    @NonNull
+    private final UUID uuid;
+    @NonNull
+    private final Instant time;
+    @NonNull
+    private final BigDecimal sum;
+    @NonNull
+    private final BigDecimal transactionFee;
 }
