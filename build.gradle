@@ -17,13 +17,4 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.12'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
-
-    // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
-    compile group: 'io.projectreactor', name: 'reactor-core', version: '3.3.7.RELEASE'
-
-    // https://mvnrepository.com/artifact/io.r2dbc/r2dbc-h2
-    testCompile group: 'io.r2dbc', name: 'r2dbc-h2', version: '0.8.4.RELEASE'
 }
