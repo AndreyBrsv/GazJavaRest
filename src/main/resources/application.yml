@@ -1,7 +1,13 @@
-dbconfig:
-  driver: 'h2'
-  protocol: ''
-  host: ''
-  user: ''
-  password: ''
-  database: ''
+spring:
+  datasource:
+    url: 'jdbc:h2:mem:testdb'
+    driverClassName: 'org.h2.Driver'
+    username: 'sa'
+    password: ''
+    hikari:
+      connection-test-query: 'SELECT 1'
+  jpa:
+    database-platform: 'org.hibernate.dialect.H2Dialect'
+  h2:
+    console:
+      enabled: true

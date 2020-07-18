@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 public class Transaction {
-    private long id;
-    private long documentId;
-    private long uuid;
-    private LocalDateTime time;
-    private long sum;
-    private long transactionFee;
+    private final long id;
+    private final long documentId;
+    private final long uuid;
+    private final LocalDateTime time;
+    private final long sum;
+    private final long transactionFee;
 }

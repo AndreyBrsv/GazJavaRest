@@ -8,10 +8,10 @@ import java.time.LocalDate;
 @Builder
 @Getter
 public class Document {
-    private long id;
-    private long documentNumber;
-    private LocalDate openDate;
-    private String companyName;
-    private String inn;
-    private String kpp;
+    private final long id;
+    private final long documentNumber;
+    private final LocalDate openDate;
+    private final String companyName;
+    private final String inn;
+    private final String kpp;
 }
