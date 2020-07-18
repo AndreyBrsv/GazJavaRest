@@ -2,16 +2,15 @@ package io.entities;
 
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
-@RequiredArgsConstructor
-@Builder
-@Getter
+@Data
+@NoArgsConstructor
 public class Document {
-    private final long id;
-    private final long documentNumber;
-    private final LocalDate openDate;
-    private final String companyName;
-    private final String inn;
-    private final String kpp;
+    private long id;
+    private long documentNumber;
+    private Instant openDate;
+    private String companyName;
+    private String inn;
+    private String kpp;
 }

@@ -1,18 +1,7 @@
 package io.dao;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import io.entities.Document;
 
-import javax.annotation.PostConstruct;
+public interface DocumentRepository extends Repository<Document, Long> {
 
-@RequiredArgsConstructor
-@Slf4j
-public class DocumentRepository {
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    @PostConstruct
-    public void method() {
-
-    }
 }

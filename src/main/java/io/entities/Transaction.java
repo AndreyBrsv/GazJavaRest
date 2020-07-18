@@ -1,20 +1,18 @@
 package io.entities;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.Instant;
 
-@RequiredArgsConstructor
-@Builder
-@Getter
+@Data
+@NoArgsConstructor
 public class Transaction {
-    private final long id;
-    private final long documentId;
-    private final long uuid;
-    private final LocalDateTime time;
-    private final long sum;
-    private final long transactionFee;
+    private Long id;
+    private Long documentId;
+    private Long uuid;
+    private Instant time;
+    private BigDecimal sum;
+    private BigDecimal transactionFee;
 }
