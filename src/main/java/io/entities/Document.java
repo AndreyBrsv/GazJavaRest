@@ -1,10 +1,12 @@
 package io.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@RequiredArgsConstructor
+@Builder
+@Getter
 public class Document {
     private long id;
     private long documentNumber;
