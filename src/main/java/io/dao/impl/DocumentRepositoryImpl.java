@@ -2,6 +2,7 @@ package io.dao.impl;
 
 import io.dao.DocumentRepository;
 import io.entities.Document;
+import io.entities.PageableView;
 import io.exception.DocumentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -132,8 +133,14 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public boolean delete(Long aLong) {
-        return false;
+    public void delete(Long aLong) {
+        String sql = "DELETE DOCUMENTS WHERE ID = " + aLong;
+        jdbcTemplate.execute(sql);
+    }
+
+    @Override
+    public PageableView<Document> pageView(Document document, int page, int limit) {
+        return null;
     }
 
     private void fillPreparedStatement(PreparedStatement ps, Document document) throws SQLException {

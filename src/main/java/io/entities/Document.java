@@ -2,15 +2,14 @@ package io.entities;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Document {
+public class Document implements Serializable {
     private long id;
     private Long documentNumber;
     private Timestamp openDate;

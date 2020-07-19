@@ -1,6 +1,7 @@
 package io.dao.impl;
 
 import io.dao.TransactionRepository;
+import io.entities.PageableView;
 import io.entities.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -60,8 +61,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
 
     @Override
-    public boolean delete(Long uuid) {
-        return false;
+    public void delete(Long uuid) {
+
+    }
+
+    @Override
+    public PageableView<Transaction> pageView(Transaction transaction, int page, int limit) {
+        return null;
     }
 
     @Override

@@ -1,6 +1,10 @@
 package io.dao;
 
-public interface Repository<Entity, Identifier> {
+import io.entities.PageableView;
+
+import java.io.Serializable;
+
+public interface Repository<Entity extends Serializable, Identifier> {
 
     /**
      * Общий метод создания сущностей
@@ -28,5 +32,14 @@ public interface Repository<Entity, Identifier> {
      * @param identifier идентификатор
      * @return результат выполениния (true/false)
      */
-    boolean delete(Identifier identifier);
+    void delete(Identifier identifier);
+
+    /**
+     *
+     * @param entity
+     * @param page
+     * @param limit
+     * @return
+     */
+    PageableView<Entity> pageView(Entity entity, int page, int limit);
 }

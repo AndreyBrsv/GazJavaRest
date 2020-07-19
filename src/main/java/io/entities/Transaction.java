@@ -3,6 +3,7 @@ package io.entities;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -11,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Transaction {
+public class Transaction implements Serializable {
     private long id;
     private Long documentId;
     private UUID uuid;
