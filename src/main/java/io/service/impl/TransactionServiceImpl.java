@@ -1,7 +1,10 @@
 package io.service.impl;
 
 import io.dao.TransactionRepository;
+import io.entities.Document;
+import io.entities.PageableView;
 import io.entities.Transaction;
+import io.entities.rq.GetPageRequest;
 import io.exception.TransactionValidationException;
 import io.service.TransactionService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,31 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction copyTransaction = transaction.copy();
         copyTransaction.setUuid(UUID.randomUUID());
         return transactionRepository.create(copyTransaction);
+    }
+
+    @Override
+    public Transaction findByUuid(UUID uuid) {
+        return null;
+    }
+
+    @Override
+    public Transaction findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Document document) {
+        return false;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
+
+    @Override
+    public PageableView<Document> getDocuments(GetPageRequest getPageRequest) {
+        return null;
     }
 
     private void validate(Transaction transaction) {
