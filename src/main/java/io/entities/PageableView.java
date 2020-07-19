@@ -12,9 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageableView<T extends Serializable> implements Serializable {
-    List<T> entities;
-    Long idFrom;
-    int limit;
-    Long lastId;
-    int allIds;
+    private List<T> entities;
+    private Long idFrom;
+    private int limit;
+    private Long lastId;
+    private int allIds;
 }
