@@ -16,7 +16,7 @@ public class TransactionController {
 
     @PostMapping("/transaction/create")
     public void createTransaction(@RequestBody Transaction transaction) {
-        transactionService.
+        transactionService.create(transaction);
     }
 
     @PostMapping("/transaction/remove")

@@ -49,7 +49,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public Transaction get(UUID uuid) {
+    public Transaction getById(Long aLong) {
         return null;
     }
 
@@ -58,8 +58,14 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         return null;
     }
 
+
     @Override
-    public boolean delete(UUID uuid) {
+    public boolean delete(Long uuid) {
         return false;
+    }
+
+    @Override
+    public Transaction findByUuid(UUID uuid) {
+        return null;
     }
 }

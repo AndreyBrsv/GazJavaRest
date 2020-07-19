@@ -14,7 +14,7 @@ public interface Repository<Entity, Identifier> {
      * @param identifier идентификатор
      * @return сущность
      */
-    Entity get(Identifier identifier);
+    Entity getById(Identifier identifier);
 
     /**
      * Обновление сущности

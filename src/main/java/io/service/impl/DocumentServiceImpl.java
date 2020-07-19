@@ -2,6 +2,8 @@ package io.service.impl;
 
 import io.dao.DocumentRepository;
 import io.entities.Document;
+import io.exception.DocumentAlreadyExistException;
+import io.exception.DocumentNotFoundException;
 import io.exception.DocumentValidationException;
 import io.service.DocumentService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,13 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public Document create(Document document) {
         validate(document);
-        return documentRepository.create(document);
+        try {
+            findByNumber(document.getDocumentNumber());
+        } catch (DocumentNotFoundException e) {
+            return documentRepository.create(document);
+        }
+
+        throw new DocumentAlreadyExistException("Document with given number already exist");
     }
 
     @Override
@@ -25,7 +33,8 @@ public class DocumentServiceImpl implements DocumentService {
         if(documentNumber == null) {
             throw new RuntimeException("Document number can't be null");
         }
-        return documentRepository.get(documentNumber);
+
+        return documentRepository.getByNumber(documentNumber);
     }
 
     @Override
