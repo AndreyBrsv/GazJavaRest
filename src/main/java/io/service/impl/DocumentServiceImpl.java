@@ -67,7 +67,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public PageableView<Document> getDocuments(GetPageRequest getPageRequest) {
         validateForView(getPageRequest);
-        return documentRepository.pageView(getPageRequest.getPage(), getPageRequest.getLimit());
+        return documentRepository.pageView(getPageRequest.getIdFrom(), getPageRequest.getLimit());
     }
 
     private void validate(Document document) {
@@ -98,11 +98,11 @@ public class DocumentServiceImpl implements DocumentService {
         if(getPageRequest.getLimit() <= 0 && getPageRequest.getLimit() >= 20) {
             throw new ValidationException("limit must be > 0 and <= 20");
         }
-        if(getPageRequest.getPage() == null ) {
-            throw new ValidationException("page is null");
+        if(getPageRequest.getIdFrom() == null ) {
+            throw new ValidationException("idFrom is null");
         }
-        if(getPageRequest.getPage() <= 0) {
-            throw new ValidationException("page must be > 0");
+        if(getPageRequest.getIdFrom() <= 0) {
+            throw new ValidationException("idFrom must be > 0");
         }
     }
 }

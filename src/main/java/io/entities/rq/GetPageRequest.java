@@ -10,6 +10,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetPageRequest implements Serializable {
-    private Integer page;
+    private Long idFrom;
     private Integer limit;
 }

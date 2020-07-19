@@ -139,8 +139,36 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public PageableView<Document> pageView(int page, int limit) {
-        return null;
+    public PageableView<Document> pageView(Long idFrom, int limit) {
+        String sql = "SELECT " +
+                "id, number, open_date, company_name, inn, kpp FROM DOCUMENTS " +
+                "WHERE id >= ? " +
+                "ORDER BY id " +
+                "LIMIT ? ";
+
+        List<Document> documents = jdbcTemplate.query(
+                (Connection connection) -> {
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setLong(1, idFrom);
+                    ps.setInt(2, limit);
+
+                    return ps;
+                }, documentRowMapper);
+
+        int allIds = jdbcTemplate.queryForList("SELECT COUNT(ID) FROM DOCUMENTS", Integer.class).get(0);
+
+        if(allIds == 0) {
+            throw new DocumentNotFoundException("No documents in database");
+        }
+
+        PageableView<Document> pageableView = new PageableView<>();
+        pageableView.setEntities(documents);
+        pageableView.setIdFrom(idFrom);
+        pageableView.setLimit(limit);
+        pageableView.setLastId(documents.get(documents.size() - 1).getId());
+        pageableView.setAllIds(allIds);
+
+        return pageableView;
     }
 
     private void fillPreparedStatement(PreparedStatement ps, Document document) throws SQLException {

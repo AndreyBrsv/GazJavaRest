@@ -1,6 +1,7 @@
 package io.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class PageableView<T extends Serializable> implements Serializable {
     List<T> entities;
-    int curPage;
+    Long idFrom;
     int limit;
-    int allPages;
-    String msgStatus;
+    Long lastId;
+    int allIds;
 }

@@ -66,7 +66,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public PageableView<Transaction> pageView(int page, int limit) {
+    public PageableView<Transaction> pageView(Long idFrom, int limit) {
         return null;
     }
 
