@@ -18,6 +18,20 @@ public class DocumentServiceImpl implements DocumentService {
         return documentRepository.create(document);
     }
 
+    @Override
+    public Document findByNumber(Long documentNumber) {
+        if(documentNumber == null) {
+            throw new RuntimeException("Document number can't be null");
+        }
+        return documentRepository.get(documentNumber);
+    }
+
+    @Override
+    public Document update(Document document) {
+        validateForUpdate(document);
+        return documentRepository.update(document);
+    }
+
     private void validate(Document document) {
         if(document.getCompanyName() == null) {
             throw new DocumentValidationException("Company name is null");
@@ -30,6 +44,12 @@ public class DocumentServiceImpl implements DocumentService {
         }
         if(document.getKpp() == null) {
             throw new DocumentValidationException("Kpp number is null");
+        }
+    }
+
+    private void validateForUpdate(Document document) {
+        if(document.getId() == 0) {
+            throw new DocumentValidationException("Id is null");
         }
     }
 }

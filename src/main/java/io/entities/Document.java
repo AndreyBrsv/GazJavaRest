@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Document {
     private long id;
     private long documentNumber;

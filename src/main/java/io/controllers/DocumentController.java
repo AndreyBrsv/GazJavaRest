@@ -3,9 +3,7 @@ package io.controllers;
 import io.entities.Document;
 import io.service.DocumentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,9 +15,14 @@ public class DocumentController {
         return documentService.create(document);
     }
 
-    @PostMapping("/document/edit")
-    public void editDocument(@RequestBody Document document) {
+    @GetMapping("/document/get/{documentNumber}")
+    public Document createDocument(@PathVariable("documentNumber") Long documentNumber) {
+        return documentService.findByNumber(documentNumber);
+    }
 
+    @PostMapping("/document/update")
+    public Document editDocument(@RequestBody Document document) {
+        return documentService.update(document);
     }
 
     @PostMapping("/document/view")
