@@ -19,9 +19,9 @@ public interface Repository<Entity, Identifier> {
     /**
      * Обновление сущности
      * @param entity сущность
-     * @return обновленная сущность
+     * @return
      */
-    Entity update(Entity entity);
+    boolean update(Entity entity);
 
     /**
      * Удаление сущности по индентификатору

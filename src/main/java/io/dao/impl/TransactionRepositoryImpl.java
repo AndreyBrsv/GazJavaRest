@@ -54,8 +54,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public Transaction update(Transaction transaction) {
-        return null;
+    public boolean update(Transaction transaction) {
+        return true;
     }
 
 

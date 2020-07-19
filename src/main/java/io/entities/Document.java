@@ -3,6 +3,8 @@ package io.entities;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -10,7 +12,7 @@ import java.sql.Timestamp;
 @Builder
 public class Document {
     private long id;
-    private long documentNumber;
+    private Long documentNumber;
     private Timestamp openDate;
     private String companyName;
     private String inn;

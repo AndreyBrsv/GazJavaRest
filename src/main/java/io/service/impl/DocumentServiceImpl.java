@@ -38,7 +38,16 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Document update(Document document) {
+    public Document findById(Long id) {
+        if(id == null) {
+            throw new RuntimeException("Document id can't be null");
+        }
+
+        return documentRepository.getById(id);
+    }
+
+    @Override
+    public boolean update(Document document) {
         validateForUpdate(document);
         return documentRepository.update(document);
     }

@@ -15,13 +15,18 @@ public class DocumentController {
         return documentService.create(document);
     }
 
-    @GetMapping("/document/get/{documentNumber}")
-    public Document createDocument(@PathVariable("documentNumber") Long documentNumber) {
+    @GetMapping("/document/get-by-number/{documentNumber}")
+    public Document getDocumentByNumber(@PathVariable("documentNumber") Long documentNumber) {
         return documentService.findByNumber(documentNumber);
     }
 
+    @GetMapping("/document/get-by-id/{id}")
+    public Document getDocumentById(@PathVariable("id") Long id) {
+        return documentService.findById(id);
+    }
+
     @PostMapping("/document/update")
-    public Document editDocument(@RequestBody Document document) {
+    public boolean updateDocument(@RequestBody Document document) {
         return documentService.update(document);
     }
 

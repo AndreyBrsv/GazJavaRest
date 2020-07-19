@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 public class Transaction {
     private long id;
-    private long documentId;
+    private Long documentId;
     private UUID uuid;
     private Timestamp time;
     private BigDecimal sum;

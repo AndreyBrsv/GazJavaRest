@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 
 @Repository
@@ -64,7 +66,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
         String sql = "SELECT " +
                 "id, number, open_date, company_name, inn, kpp " +
                 "FROM DOCUMENTS " +
-                "WHERE id = (?)";
+                "WHERE id = ?";
 
         List<Document> documentList = jdbcTemplate.query(
                 (Connection connection) -> {
@@ -90,7 +92,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
         String sql = "SELECT " +
                 "id, number, open_date, company_name, inn, kpp " +
                 "FROM DOCUMENTS " +
-                "WHERE number = (?)";
+                "WHERE number = ?";
         List<Document> documentList = jdbcTemplate.query(
                 (Connection connection) -> {
                     PreparedStatement ps = connection.prepareStatement(sql);
@@ -110,25 +112,61 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public Document update(Document document) {
-//        String sql = "UPDATE";
-//        Document copyDocument = document.copy();
-//        jdbcTemplate.update(
-//                (Connection connection) -> {
-//                    PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
-//                    ps.setLong(1, copyDocument.getDocumentNumber());
-//                    ps.setTimestamp(2, copyDocument.getOpenDate());
-//                    ps.setString(3, copyDocument.getCompanyName());
-//                    ps.setString(4, copyDocument.getInn());
-//                    ps.setString(5, copyDocument.getKpp());
-//
-//                    return ps;
-//                });
-        return null;
+    public boolean update(Document document) {
+        String sql =
+                "UPDATE DOCUMENTS SET " +
+                "NUMBER = ISNULL(?, NUMBER), " +
+                "OPEN_DATE = ISNULL(?, OPEN_DATE), " +
+                "COMPANY_NAME = ISNULL(?, COMPANY_NAME), " +
+                "INN = ISNULL(?, INN), " +
+                "KPP = ISNULL(?, KPP) " +
+                "WHERE ID = ?";
+
+        int strings = jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(sql);
+            fillPreparedStatement(ps, document);
+            return ps;
+        });
+
+        return strings > 0;
     }
 
     @Override
     public boolean delete(Long aLong) {
         return false;
+    }
+
+    private void fillPreparedStatement(PreparedStatement ps, Document document) throws SQLException {
+        if(document.getDocumentNumber() == null) {
+            ps.setNull(1, Types.BIGINT);
+        } else {
+            ps.setLong(1, document.getDocumentNumber());
+        }
+
+        if(document.getOpenDate() == null) {
+            ps.setNull(2, Types.TIMESTAMP);
+        } else {
+            ps.setTimestamp(2, document.getOpenDate());
+        }
+
+        if(document.getCompanyName() == null) {
+            ps.setNull(3, Types.VARCHAR);
+        } else {
+            ps.setString(3, document.getCompanyName());
+        }
+
+        if(document.getInn() == null) {
+            ps.setNull(4, Types.VARCHAR);
+        } else {
+            ps.setString(4, document.getInn());
+        }
+
+        if(document.getKpp() == null) {
+            ps.setNull(5, Types.VARCHAR);
+        } else {
+            ps.setString(5, document.getKpp());
+        }
+
+        ps.setLong(6, document.getId());
     }
 }

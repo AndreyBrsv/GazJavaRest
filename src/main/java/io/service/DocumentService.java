@@ -25,11 +25,18 @@ public interface DocumentService {
     Document findByNumber(Long documentNumber);
 
     /**
+     * Поиск документа по id
+     * @param id id документа
+     * @return найденный документ
+     */
+    Document findById(Long id);
+
+    /**
      * Обновление полей документа
      * @param document документ
-     * @return Обновленный документ
+     * @return
      */
-    Document update(Document document);
+    boolean update(Document document);
 
     /**
      * Получение документов постранично
