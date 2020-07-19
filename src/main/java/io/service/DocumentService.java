@@ -2,6 +2,8 @@ package io.service;
 
 import io.entities.Document;
 
+import java.util.List;
+
 /**
  * Сервисный слой для проверки и валидации входных параметров
  * Использует DAO слой для работы с БД
@@ -28,4 +30,11 @@ public interface DocumentService {
      * @return Обновленный документ
      */
     Document update(Document document);
+
+    /**
+     * Получение документов постранично
+     * @param page номер страницы
+     * @return список документов данной страницы
+     */
+    List<Document> getDocumentsByPage(int page);
 }
