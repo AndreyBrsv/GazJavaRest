@@ -1,8 +1,11 @@
 package io.controllers;
 
 import io.entities.Document;
+import io.entities.PageableView;
+import io.entities.rq.GetPageRequest;
 import io.service.DocumentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,8 +33,14 @@ public class DocumentController {
         return documentService.update(document);
     }
 
-    @PostMapping("/document/view")
-    public void viewDocuments() {
+    @GetMapping("/document/delete-by-id/{id}")
+    public ResponseEntity<?> deleteDocument(@PathVariable("id") Long id) {
+        documentService.deleteById(id);
+        return ResponseEntity.ok().body("{\"status\" : \"ok\"}");
+    }
 
+    @GetMapping("/document/view")
+    public PageableView<Document> viewDocuments(@RequestBody GetPageRequest getPageRequest) {
+        return documentService.getDocuments(getPageRequest);
     }
 }

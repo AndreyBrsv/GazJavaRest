@@ -15,4 +15,5 @@ public class PageableView<T extends Serializable> implements Serializable {
     int curPage;
     int limit;
     int allPages;
+    String msgStatus;
 }

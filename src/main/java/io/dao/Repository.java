@@ -36,10 +36,9 @@ public interface Repository<Entity extends Serializable, Identifier> {
 
     /**
      *
-     * @param entity
      * @param page
      * @param limit
      * @return
      */
-    PageableView<Entity> pageView(Entity entity, int page, int limit);
+    PageableView<Entity> pageView(int page, int limit);
 }

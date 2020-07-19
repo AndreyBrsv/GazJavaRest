@@ -2,9 +2,12 @@ package io.service.impl;
 
 import io.dao.DocumentRepository;
 import io.entities.Document;
+import io.entities.PageableView;
+import io.entities.rq.GetPageRequest;
 import io.exception.DocumentAlreadyExistException;
 import io.exception.DocumentNotFoundException;
 import io.exception.DocumentValidationException;
+import io.exception.ValidationException;
 import io.service.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,15 +56,25 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Document> getDocumentsByPage(int page) {
-        return null;
+    public void deleteById(Long id) {
+        if(id == null) {
+            throw new RuntimeException("Document id can't be null");
+        }
+
+        documentRepository.delete(id);
+    }
+
+    @Override
+    public PageableView<Document> getDocuments(GetPageRequest getPageRequest) {
+        validateForView(getPageRequest);
+        return documentRepository.pageView(getPageRequest.getPage(), getPageRequest.getLimit());
     }
 
     private void validate(Document document) {
         if(document.getCompanyName() == null) {
             throw new DocumentValidationException("Company name is null");
         }
-        if(document.getDocumentNumber() == 0) { //todo unique number
+        if(document.getDocumentNumber() == 0) {
             throw new DocumentValidationException("Document number is 0");
         }
         if(document.getInn() == null) {
@@ -75,6 +88,21 @@ public class DocumentServiceImpl implements DocumentService {
     private void validateForUpdate(Document document) {
         if(document.getId() == 0) {
             throw new DocumentValidationException("Id is null");
+        }
+    }
+
+    private void validateForView(GetPageRequest getPageRequest) {
+        if(getPageRequest.getLimit() == null) {
+            throw new ValidationException("limit is null");
+        }
+        if(getPageRequest.getLimit() <= 0 && getPageRequest.getLimit() >= 20) {
+            throw new ValidationException("limit must be > 0 and <= 20");
+        }
+        if(getPageRequest.getPage() == null ) {
+            throw new ValidationException("page is null");
+        }
+        if(getPageRequest.getPage() <= 0) {
+            throw new ValidationException("page must be > 0");
         }
     }
 }

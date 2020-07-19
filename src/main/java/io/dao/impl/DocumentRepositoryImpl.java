@@ -139,7 +139,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public PageableView<Document> pageView(Document document, int page, int limit) {
+    public PageableView<Document> pageView(int page, int limit) {
         return null;
     }
 

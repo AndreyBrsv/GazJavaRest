@@ -1,6 +1,8 @@
 package io.service;
 
 import io.entities.Document;
+import io.entities.PageableView;
+import io.entities.rq.GetPageRequest;
 
 import java.util.List;
 
@@ -38,10 +40,7 @@ public interface DocumentService {
      */
     boolean update(Document document);
 
-    /**
-     * Получение документов постранично
-     * @param page номер страницы
-     * @return список документов данной страницы
-     */
-    List<Document> getDocumentsByPage(int page);
+    void deleteById(Long id);
+
+    PageableView<Document> getDocuments(GetPageRequest getPageRequest);
 }
