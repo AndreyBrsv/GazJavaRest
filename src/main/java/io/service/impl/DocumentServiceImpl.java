@@ -5,8 +5,9 @@ import io.entities.Document;
 import io.exception.DocumentValidationException;
 import io.service.DocumentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,11 @@ public class DocumentServiceImpl implements DocumentService {
     public Document update(Document document) {
         validateForUpdate(document);
         return documentRepository.update(document);
+    }
+
+    @Override
+    public List<Document> getDocumentsByPage(int page) {
+        return null;
     }
 
     private void validate(Document document) {
