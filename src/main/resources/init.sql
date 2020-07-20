@@ -19,7 +19,7 @@ CREATE TABLE TRANSACTION(
                             uuid uuid NOT NULL,
                             time TIMESTAMP NOT NULL,
                             sum NUMERIC NOT NULL,
-                            transaction_fee NUMERIC NOT NULL
+                            fee NUMERIC NOT NULL
 );
 
 ALTER TABLE TRANSACTION
