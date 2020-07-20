@@ -5,6 +5,7 @@
 **Ссылка** на коллекцию запросов: 
 https://www.getpostman.com/collections/625c12dd1f4da910d36d
 
+![alt text](https://a.radikal.ru/a21/2007/72/43e5646f5d7d.png)
 
 # Сборка и запуск проекта
 
