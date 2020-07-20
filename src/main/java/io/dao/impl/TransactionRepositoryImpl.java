@@ -50,18 +50,17 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public Transaction getById(Long aLong) {
+    public Transaction getByIdentifier(UUID uuid) {
         return null;
     }
 
     @Override
     public boolean update(Transaction transaction) {
-        return true;
+        throw new UnsupportedOperationException();
     }
 
-
     @Override
-    public void delete(Long uuid) {
+    public void delete(UUID uuid) {
 
     }
 
@@ -70,8 +69,4 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         return null;
     }
 
-    @Override
-    public Transaction findByUuid(UUID uuid) {
-        return null;
-    }
 }

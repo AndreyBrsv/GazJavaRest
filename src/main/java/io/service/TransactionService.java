@@ -13,11 +13,7 @@ public interface TransactionService {
 
     Transaction findByUuid(UUID uuid);
 
-    Transaction findById(Long id);
+    void deleteByUuid(UUID uuid);
 
-    boolean update(Document document);
-
-    void deleteById(Long id);
-
-    PageableView<Document> getDocuments(GetPageRequest getPageRequest);
+    PageableView<Transaction> getTransactions(GetPageRequest getPageRequest);
 }

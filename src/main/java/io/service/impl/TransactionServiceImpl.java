@@ -1,11 +1,11 @@
 package io.service.impl;
 
 import io.dao.TransactionRepository;
-import io.entities.Document;
 import io.entities.PageableView;
 import io.entities.Transaction;
 import io.entities.rq.GetPageRequest;
 import io.exception.TransactionValidationException;
+import io.exception.ValidationException;
 import io.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction create(Transaction transaction) {
-        validate(transaction);
+        ValidateUtil.validateTransaction(transaction);
         Transaction copyTransaction = transaction.copy();
         copyTransaction.setUuid(UUID.randomUUID());
         return transactionRepository.create(copyTransaction);
@@ -29,44 +29,18 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction findByUuid(UUID uuid) {
-        return null;
+        ValidateUtil.validateUuid(uuid);
+        return transactionRepository.getByIdentifier(uuid);
     }
 
     @Override
-    public Transaction findById(Long id) {
-        return null;
+    public void deleteByUuid(UUID uuid) {
+        ValidateUtil.validateUuid(uuid);
+        transactionRepository.delete(uuid);
     }
 
     @Override
-    public boolean update(Document document) {
-        return false;
-    }
-
-    @Override
-    public void deleteById(Long id) {
-
-    }
-
-    @Override
-    public PageableView<Document> getDocuments(GetPageRequest getPageRequest) {
-        return null;
-    }
-
-    private void validate(Transaction transaction) {
-        if(transaction.getDocumentId() == 0) {
-            throw new TransactionValidationException("DocumentId can't be 0");
-        }
-        if(transaction.getSum().doubleValue() <= 0) {
-            throw new TransactionValidationException("TransactionSum must be > 0");
-        }
-        if(transaction.getTransactionFee().doubleValue() <= 0) {
-            throw new TransactionValidationException("TransactionFee must be > 0");
-        }
-        if(transaction.getTime().before(Timestamp.from(Instant.now()))) {
-            throw new TransactionValidationException("Transaction must be before " + Instant.now());
-        }
-        if(transaction.getUuid() != null) {
-            throw new TransactionValidationException("Transaction UUID must be null");
-        }
+    public PageableView<Transaction> getTransactions(GetPageRequest getPageRequest) {
+        return transactionRepository.pageView(getPageRequest.getIdFrom(), getPageRequest.getLimit());
     }
 }

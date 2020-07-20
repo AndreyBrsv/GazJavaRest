@@ -1,6 +1,6 @@
 package io.exception;
 
-public class TransactionValidationException extends RuntimeException {
+public class TransactionValidationException extends ValidationException {
     public TransactionValidationException(String message) {
         super(message);
     }

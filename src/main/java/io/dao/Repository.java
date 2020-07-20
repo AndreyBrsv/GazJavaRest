@@ -18,7 +18,7 @@ public interface Repository<Entity extends Serializable, Identifier> {
      * @param identifier идентификатор
      * @return сущность
      */
-    Entity getById(Identifier identifier);
+    Entity getByIdentifier(Identifier identifier);
 
     /**
      * Обновление сущности

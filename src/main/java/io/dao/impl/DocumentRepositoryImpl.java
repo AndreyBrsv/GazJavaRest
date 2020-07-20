@@ -63,7 +63,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public Document getById(Long id) {
+    public Document getByIdentifier(Long id) {
         String sql = "SELECT " +
                 "id, number, open_date, company_name, inn, kpp " +
                 "FROM DOCUMENTS " +

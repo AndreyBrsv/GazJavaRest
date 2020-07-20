@@ -2,12 +2,14 @@ package io.controllers;
 
 import io.dao.TransactionRepository;
 import io.entities.Document;
+import io.entities.PageableView;
 import io.entities.Transaction;
+import io.entities.rq.GetPageRequest;
 import io.service.TransactionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,17 +17,22 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping("/transaction/create")
-    public void createTransaction(@RequestBody Transaction transaction) {
-        transactionService.create(transaction);
+    public Transaction createTransaction(@RequestBody Transaction transaction) {
+        return transactionService.create(transaction);
     }
 
-    @PostMapping("/transaction/remove")
-    public void removeTransaction(@RequestBody Document document) {
-
+    @GetMapping("/transaction/get/{uuid}")
+    public Transaction getTransaction(@PathVariable("uuid") UUID uuid) {
+        return transactionService.findByUuid(uuid);
     }
 
-    @PostMapping("/transaction/view")
-    public void viewTransactions() {
+    @GetMapping("/transaction/remove/{uuid}")
+    public void removeTransaction(@PathVariable("uuid") UUID uuid) {
+        transactionService.deleteByUuid(uuid);
+    }
 
+    @GetMapping("/transaction/view")
+    public PageableView<Transaction> viewTransactions(@RequestBody GetPageRequest getPageRequest) {
+        return transactionService.getTransactions(getPageRequest);
     }
 }
