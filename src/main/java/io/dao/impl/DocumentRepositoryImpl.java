@@ -89,7 +89,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 
 
     @Override
-    public Document getByNumber(long documentNumber) {
+    public Document getByNumber(Long documentNumber) {
         String sql = "SELECT " +
                 "id, number, open_date, company_name, inn, kpp " +
                 "FROM DOCUMENTS " +
@@ -155,20 +155,14 @@ public class DocumentRepositoryImpl implements DocumentRepository {
                     return ps;
                 }, documentRowMapper);
 
-        if(documentList.isEmpty()) {
-            throw new DocumentNotFoundException("No documents in database with your params");
-        }
-
         int allIds = jdbcTemplate.queryForList("SELECT COUNT(ID) FROM DOCUMENTS", Integer.class).get(0);
 
-        PageableView<Document> pageableView = new PageableView<>();
-        pageableView.setEntities(documentList);
-        pageableView.setIdFrom(idFrom);
-        pageableView.setLimit(limit);
-        pageableView.setLastId(documentList.get(documentList.size() - 1).getId());
-        pageableView.setAllIds(allIds);
-
-        return pageableView;
+        return new PageableView<>(
+                documentList,
+                idFrom,
+                documentList.isEmpty() ? 0 : documentList.get(documentList.size() - 1).getId(),
+                limit,
+                allIds);
     }
 
     private void fillPreparedStatement(PreparedStatement ps, Document document) throws SQLException {

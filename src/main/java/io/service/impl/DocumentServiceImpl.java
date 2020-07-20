@@ -54,12 +54,12 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public void deleteById(Long id) {
         ValidateUtil.validateId(id);
-        if(transactionRepository.getByDocumentId(id).isEmpty()) {
-            documentRepository.delete(id);
+        if(!transactionRepository.getByDocumentId(id).isEmpty()) {
+            throw new DocumentDeleteException("Document has transactions." +
+                    "If you want to delete this document you should delete all transactions bounded with one.");
         }
 
-        throw new DocumentDeleteException("Document has transactions." +
-                "If you want to delete this document you should delete all transactions bounded with one.");
+        documentRepository.delete(id);
     }
 
     @Override

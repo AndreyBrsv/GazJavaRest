@@ -11,6 +11,9 @@ import java.util.UUID;
 
 public class ValidateUtil {
     public static void validateDocument(Document document) {
+        if(document.getId() != null) {
+            throw new DocumentValidationException("Id must be null");
+        }
         if(document.getCompanyName() == null) {
             throw new DocumentValidationException("Company name is null");
         }
@@ -26,7 +29,7 @@ public class ValidateUtil {
     }
 
     public static void validateForDocumentUpd(Document document) {
-        if(document.getId() == 0) {
+        if(document.getId() == null) {
             throw new DocumentValidationException("Id is null");
         }
     }

@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class Transaction implements Serializable {
-    private long id;
+    private Long id;
     private Long documentId;
     private UUID uuid;
     private Timestamp time;

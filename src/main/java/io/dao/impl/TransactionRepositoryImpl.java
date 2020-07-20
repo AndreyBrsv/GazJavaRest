@@ -3,7 +3,6 @@ package io.dao.impl;
 import io.dao.TransactionRepository;
 import io.entities.PageableView;
 import io.entities.Transaction;
-import io.exception.DocumentNotFoundException;
 import io.exception.TransactionNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Repository
@@ -116,20 +114,14 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                     return ps;
                 }, transactionRowMapper);
 
-        if(transactionList.isEmpty()) {
-            throw new TransactionNotFoundException("No transactions in database with your params");
-        }
-
         int allIds = jdbcTemplate.queryForList("SELECT COUNT(ID) FROM TRANSACTION", Integer.class).get(0);
 
-        PageableView<Transaction> pageableView = new PageableView<>();
-        pageableView.setEntities(transactionList);
-        pageableView.setIdFrom(idFrom);
-        pageableView.setLimit(limit);
-        pageableView.setLastId(transactionList.get(transactionList.size() - 1).getId());
-        pageableView.setAllIds(allIds);
-
-        return pageableView;
+        return new PageableView<>(
+                transactionList,
+                idFrom,
+                transactionList.isEmpty() ? 0 : transactionList.get(transactionList.size() - 1).getId(),
+                limit,
+                allIds);
     }
 
     @Override
@@ -139,18 +131,12 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 "FROM TRANSACTION " +
                 "WHERE document_id = ?";
 
-        List<Transaction> transactionList = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 (Connection connection) -> {
                     PreparedStatement ps = connection.prepareStatement(sql);
                     ps.setLong(1, documentId);
 
                     return ps;
                 }, transactionRowMapper);
-
-        if(transactionList.isEmpty()) {
-            throw new TransactionNotFoundException("No one transaction with this documentId");
-        }
-
-        return transactionList;
     }
 }

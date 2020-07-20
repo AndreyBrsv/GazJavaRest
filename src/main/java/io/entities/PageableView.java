@@ -13,7 +13,7 @@ import java.util.List;
 public class PageableView<T extends Serializable> implements Serializable {
     private List<T> entities;
     private Long idFrom;
-    private int limit;
     private Long lastId;
+    private int limit;
     private int allIds;
 }

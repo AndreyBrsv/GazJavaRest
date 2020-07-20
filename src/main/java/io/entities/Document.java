@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 public class Document implements Serializable {
-    private long id;
+    private Long id;
     private Long number;
     private Timestamp openDate;
     private String companyName;

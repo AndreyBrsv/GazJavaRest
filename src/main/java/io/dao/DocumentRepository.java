@@ -12,5 +12,5 @@ public interface DocumentRepository extends Repository<Document, Long> {
      * @param documentNumber номер документа
      * @return документ
      */
-    Document getByNumber(long documentNumber);
+    Document getByNumber(Long documentNumber);
 }
