@@ -7,6 +7,7 @@ import io.entities.Transaction;
 import io.entities.rq.GetPageRequest;
 import io.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +28,16 @@ public class TransactionController {
         return transactionService.findByUuid(uuid);
     }
 
-    @DeleteMapping("/transaction/delete-by-uuid/{uuid}")
+    @DeleteMapping(value = "/transaction/delete-by-uuid/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> removeTransaction(@PathVariable("uuid") UUID uuid) {
-        transactionService.deleteByUuid(uuid);
+        try {
+            transactionService.deleteByUuid(uuid);
+        } catch (Exception e) {
+            return ResponseEntity.ok().body(
+                    "{\"status\" : \"error\", " +
+                    "\"message\" : \"" + e.getMessage() + "\"}");
+        }
+
         return ResponseEntity.ok().body("{\"status\" : \"ok\"}");
     }
 

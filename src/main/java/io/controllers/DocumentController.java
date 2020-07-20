@@ -5,6 +5,7 @@ import io.entities.PageableView;
 import io.entities.rq.GetPageRequest;
 import io.service.DocumentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,15 @@ public class DocumentController {
         return documentService.update(document);
     }
 
-    @DeleteMapping("/document/delete-by-id/{id}")
+    @DeleteMapping(value = "/document/delete-by-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteDocument(@PathVariable("id") Long id) {
-        documentService.deleteById(id);
+        try {
+            documentService.deleteById(id);
+        } catch (Exception e) {
+            return ResponseEntity.ok().body(
+                    "{\"status\" : \"error\", " +
+                            "\"message\" : \"" + e.getMessage() + "\"}");
+        }
         return ResponseEntity.ok().body("{\"status\" : \"ok\"}");
     }
 

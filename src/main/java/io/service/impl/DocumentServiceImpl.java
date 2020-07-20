@@ -55,7 +55,7 @@ public class DocumentServiceImpl implements DocumentService {
     public void deleteById(Long id) {
         ValidateUtil.validateId(id);
         if(!transactionRepository.getByDocumentId(id).isEmpty()) {
-            throw new DocumentDeleteException("Document has transactions." +
+            throw new DocumentDeleteException("Document has transactions. " +
                     "If you want to delete this document you should delete all transactions bounded with one.");
         }
 
