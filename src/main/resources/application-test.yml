@@ -6,6 +6,6 @@ spring:
     password: ''
     hikari:
       connection-test-query: 'SELECT 1'
-      connection-init-sql: "RUNSCRIPT FROM '~/Projects/RestGazJava/src/main/resources/init.sql'"
+      connection-init-sql: "RUNSCRIPT FROM 'src/main/resources/init.sql'"
   jpa:
     database-platform: 'org.hibernate.dialect.H2Dialect'
