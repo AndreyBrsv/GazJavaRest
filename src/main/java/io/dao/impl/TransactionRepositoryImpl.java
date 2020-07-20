@@ -95,12 +95,41 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     @Override
     public void delete(UUID uuid) {
-
+        String sql = "DELETE TRANSACTION WHERE UUID = " + uuid;
+        jdbcTemplate.execute(sql);
     }
 
     @Override
     public PageableView<Transaction> pageView(Long idFrom, int limit) {
-        return null;
+        String sql = "SELECT " +
+                "id, document_id, uuid, time, sum, fee FROM TRANSACTION " +
+                "WHERE id >= ? " +
+                "ORDER BY id " +
+                "LIMIT ? ";
+
+        List<Transaction> transactionList = jdbcTemplate.query(
+                (Connection connection) -> {
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setLong(1, idFrom);
+                    ps.setInt(2, limit);
+
+                    return ps;
+                }, transactionRowMapper);
+
+        int allIds = jdbcTemplate.queryForList("SELECT COUNT(ID) FROM TRANSACTION", Integer.class).get(0);
+
+        if(allIds == 0) {
+            throw new DocumentNotFoundException("No documents in database");
+        }
+
+        PageableView<Transaction> pageableView = new PageableView<>();
+        pageableView.setEntities(transactionList);
+        pageableView.setIdFrom(idFrom);
+        pageableView.setLimit(limit);
+        pageableView.setLastId(transactionList.get(transactionList.size() - 1).getId());
+        pageableView.setAllIds(allIds);
+
+        return pageableView;
     }
 
 }
