@@ -7,6 +7,7 @@ import io.entities.Transaction;
 import io.entities.rq.GetPageRequest;
 import io.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -27,8 +28,9 @@ public class TransactionController {
     }
 
     @DeleteMapping("/transaction/delete-by-uuid/{uuid}")
-    public void removeTransaction(@PathVariable("uuid") UUID uuid) {
+    public ResponseEntity<?> removeTransaction(@PathVariable("uuid") UUID uuid) {
         transactionService.deleteByUuid(uuid);
+        return ResponseEntity.ok().body("{\"status\" : \"ok\"}");
     }
 
     @GetMapping("/transaction/view")

@@ -4,11 +4,8 @@ import io.entities.Document;
 import io.entities.PageableView;
 import io.entities.rq.GetPageRequest;
 
-import java.util.List;
-
 /**
- * Сервисный слой для проверки и валидации входных параметров
- * Использует DAO слой для работы с БД
+ * Сервисный слой для проверки и валидации входных параметров {@link Document}
  */
 public interface DocumentService {
 
@@ -36,11 +33,22 @@ public interface DocumentService {
     /**
      * Обновление полей документа
      * @param document документ
-     * @return
+     * @return успешность обновления (true/false)
      */
     boolean update(Document document);
 
+    /**
+     * Удаление документа по ID
+     * @param id id документа
+     */
     void deleteById(Long id);
 
+    /**
+     * Постраничный вывод документов
+     * @param getPageRequest запрос с параметрами
+     * @see GetPageRequest
+     * @return возращает пролистываемый список
+     * @see PageableView
+     */
     PageableView<Document> getDocuments(GetPageRequest getPageRequest);
 }

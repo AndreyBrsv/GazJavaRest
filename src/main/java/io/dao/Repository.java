@@ -23,16 +23,22 @@ public interface Repository<Entity extends Serializable, Identifier> {
     /**
      * Обновление сущности
      * @param entity сущность
-     * @return
+     * @return успешность обновления (true/false)
      */
     boolean update(Entity entity);
 
     /**
      * Удаление сущности по индентификатору
      * @param identifier идентификатор
-     * @return результат выполениния (true/false)
      */
     void delete(Identifier identifier);
 
+    /**
+     * Постраничный вывод сущностей
+     * @param idFrom id с которого начинается вывод
+     * @param limit количество сущностей для вывода (не более 20)
+     * @return возращает пролистываемый список
+     * @see PageableView
+     */
     PageableView<Entity> pageView(Long idFrom, int limit);
 }
