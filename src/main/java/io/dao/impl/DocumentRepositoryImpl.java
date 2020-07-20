@@ -133,9 +133,9 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public void delete(Long aLong) {
-        String sql = "DELETE DOCUMENTS WHERE ID = " + aLong;
-        jdbcTemplate.execute(sql);
+    public void delete(Long id) {
+        String sqlDelete = "DELETE DOCUMENTS WHERE ID = " + id;
+        jdbcTemplate.execute(sqlDelete);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
                 "ORDER BY id " +
                 "LIMIT ? ";
 
-        List<Document> documents = jdbcTemplate.query(
+        List<Document> documentList = jdbcTemplate.query(
                 (Connection connection) -> {
                     PreparedStatement ps = connection.prepareStatement(sql);
                     ps.setLong(1, idFrom);
@@ -155,17 +155,17 @@ public class DocumentRepositoryImpl implements DocumentRepository {
                     return ps;
                 }, documentRowMapper);
 
-        int allIds = jdbcTemplate.queryForList("SELECT COUNT(ID) FROM DOCUMENTS", Integer.class).get(0);
-
-        if(allIds == 0) {
-            throw new DocumentNotFoundException("No documents in database");
+        if(documentList.isEmpty()) {
+            throw new DocumentNotFoundException("No documents in database with your params");
         }
 
+        int allIds = jdbcTemplate.queryForList("SELECT COUNT(ID) FROM DOCUMENTS", Integer.class).get(0);
+
         PageableView<Document> pageableView = new PageableView<>();
-        pageableView.setEntities(documents);
+        pageableView.setEntities(documentList);
         pageableView.setIdFrom(idFrom);
         pageableView.setLimit(limit);
-        pageableView.setLastId(documents.get(documents.size() - 1).getId());
+        pageableView.setLastId(documentList.get(documentList.size() - 1).getId());
         pageableView.setAllIds(allIds);
 
         return pageableView;

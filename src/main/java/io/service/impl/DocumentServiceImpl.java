@@ -1,10 +1,12 @@
 package io.service.impl;
 
 import io.dao.DocumentRepository;
+import io.dao.TransactionRepository;
 import io.entities.Document;
 import io.entities.PageableView;
 import io.entities.rq.GetPageRequest;
 import io.exception.DocumentAlreadyExistException;
+import io.exception.DocumentDeleteException;
 import io.exception.DocumentNotFoundException;
 import io.service.DocumentService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
     private final DocumentRepository documentRepository;
+    private final TransactionRepository transactionRepository;
 
     @Override
     public Document create(Document document) {
@@ -38,10 +41,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public Document findById(Long id) {
-        if(id == null) {
-            throw new RuntimeException("Document id can't be null");
-        }
-
+        ValidateUtil.validateId(id);
         return documentRepository.getByIdentifier(id);
     }
 
@@ -53,11 +53,13 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void deleteById(Long id) {
-        if(id == null) {
-            throw new RuntimeException("Document id can't be null");
+        ValidateUtil.validateId(id);
+        if(transactionRepository.getByDocumentId(id).isEmpty()) {
+            documentRepository.delete(id);
         }
 
-        documentRepository.delete(id);
+        throw new DocumentDeleteException("Document has transactions." +
+                "If you want to delete this document you should delete all transactions bounded with one.");
     }
 
     @Override

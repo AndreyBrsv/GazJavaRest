@@ -55,6 +55,15 @@ public class ValidateUtil {
         }
     }
 
+    public static void validateId(Long id) {
+        if(id == null) {
+            throw new ValidationException("Id must be not null");
+        }
+        if(id <= 0) {
+            throw new ValidationException("Id mus be > 0");
+        }
+    }
+
     public static void validateForView(GetPageRequest getPageRequest) {
         if(getPageRequest.getLimit() == null) {
             throw new ValidationException("limit is null");

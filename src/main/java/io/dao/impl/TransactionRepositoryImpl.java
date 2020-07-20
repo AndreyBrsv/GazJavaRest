@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository
@@ -115,11 +116,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                     return ps;
                 }, transactionRowMapper);
 
-        int allIds = jdbcTemplate.queryForList("SELECT COUNT(ID) FROM TRANSACTION", Integer.class).get(0);
-
-        if(allIds == 0) {
-            throw new DocumentNotFoundException("No documents in database");
+        if(transactionList.isEmpty()) {
+            throw new TransactionNotFoundException("No transactions in database with your params");
         }
+
+        int allIds = jdbcTemplate.queryForList("SELECT COUNT(ID) FROM TRANSACTION", Integer.class).get(0);
 
         PageableView<Transaction> pageableView = new PageableView<>();
         pageableView.setEntities(transactionList);
@@ -131,4 +132,25 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         return pageableView;
     }
 
+    @Override
+    public List<Transaction> getByDocumentId(Long documentId) {
+        String sql = "SELECT " +
+                "id, document_id, uuid, time, sum, fee " +
+                "FROM TRANSACTION " +
+                "WHERE document_id = ?";
+
+        List<Transaction> transactionList = jdbcTemplate.query(
+                (Connection connection) -> {
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setLong(1, documentId);
+
+                    return ps;
+                }, transactionRowMapper);
+
+        if(transactionList.isEmpty()) {
+            throw new TransactionNotFoundException("No one transaction with this documentId");
+        }
+
+        return transactionList;
+    }
 }
