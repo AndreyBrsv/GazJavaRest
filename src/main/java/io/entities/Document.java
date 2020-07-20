@@ -11,13 +11,13 @@ import java.sql.Timestamp;
 @Builder
 public class Document implements Serializable {
     private long id;
-    private Long documentNumber;
+    private Long number;
     private Timestamp openDate;
     private String companyName;
     private String inn;
     private String kpp;
 
     public Document copy() {
-        return new Document(this.id, this.documentNumber, this.openDate, this.companyName, this.inn, this.kpp);
+        return new Document(this.id, this.number, this.openDate, this.companyName, this.inn, this.kpp);
     }
 }

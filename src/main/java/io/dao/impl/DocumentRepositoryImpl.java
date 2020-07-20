@@ -24,7 +24,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 
     private final RowMapper<Document> documentRowMapper =
             (rs, rowNum) -> Document.builder().id(rs.getLong(1))
-            .documentNumber(rs.getLong(2))
+            .number(rs.getLong(2))
             .openDate(rs.getTimestamp(3))
             .companyName(rs.getString(4))
             .inn(rs.getString(5))
@@ -44,7 +44,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
         jdbcTemplate.update(
                 (Connection connection) -> {
                     PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
-                    ps.setLong(1, copyDocument.getDocumentNumber());
+                    ps.setLong(1, copyDocument.getNumber());
                     ps.setTimestamp(2, copyDocument.getOpenDate());
                     ps.setString(3, copyDocument.getCompanyName());
                     ps.setString(4, copyDocument.getInn());
@@ -172,10 +172,10 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     private void fillPreparedStatement(PreparedStatement ps, Document document) throws SQLException {
-        if(document.getDocumentNumber() == null) {
+        if(document.getNumber() == null) {
             ps.setNull(1, Types.BIGINT);
         } else {
-            ps.setLong(1, document.getDocumentNumber());
+            ps.setLong(1, document.getNumber());
         }
 
         if(document.getOpenDate() == null) {

@@ -21,12 +21,12 @@ public class TransactionController {
         return transactionService.create(transaction);
     }
 
-    @GetMapping("/transaction/get/{uuid}")
+    @GetMapping("/transaction/get-by-uuid/{uuid}")
     public Transaction getTransaction(@PathVariable("uuid") UUID uuid) {
         return transactionService.findByUuid(uuid);
     }
 
-    @GetMapping("/transaction/remove/{uuid}")
+    @DeleteMapping("/transaction/delete-by-uuid/{uuid}")
     public void removeTransaction(@PathVariable("uuid") UUID uuid) {
         transactionService.deleteByUuid(uuid);
     }

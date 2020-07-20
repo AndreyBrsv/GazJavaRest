@@ -28,12 +28,12 @@ public class DocumentController {
         return documentService.findById(id);
     }
 
-    @PostMapping("/document/update")
+    @PutMapping("/document/update")
     public boolean updateDocument(@RequestBody Document document) {
         return documentService.update(document);
     }
 
-    @GetMapping("/document/delete-by-id/{id}")
+    @DeleteMapping("/document/delete-by-id/{id}")
     public ResponseEntity<?> deleteDocument(@PathVariable("id") Long id) {
         documentService.deleteById(id);
         return ResponseEntity.ok().body("{\"status\" : \"ok\"}");

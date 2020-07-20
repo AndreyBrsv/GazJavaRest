@@ -14,7 +14,7 @@ ALTER TABLE DOCUMENTS
     ADD CONSTRAINT documents_unique_number UNIQUE (number);
 
 CREATE TABLE TRANSACTION(
-                            id BIGINT PRIMARY KEY,
+                            id BIGINT auto_increment PRIMARY KEY,
                             document_id BIGINT REFERENCES DOCUMENTS (id),
                             uuid uuid NOT NULL,
                             time TIMESTAMP NOT NULL,

@@ -1,7 +1,6 @@
 package io.dao.impl;
 
 import io.dao.TransactionRepository;
-import io.entities.Document;
 import io.entities.PageableView;
 import io.entities.Transaction;
 import io.exception.DocumentNotFoundException;
@@ -29,7 +28,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                     .uuid((UUID) rs.getObject(3))
                     .time(rs.getTimestamp(4))
                     .sum(rs.getBigDecimal(5))
-                    .transactionFee(rs.getBigDecimal(6))
+                    .fee(rs.getBigDecimal(6))
                     .build();
 
     @Override
@@ -49,7 +48,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                     ps.setObject(2, copyTransaction.getUuid());
                     ps.setTimestamp(3, copyTransaction.getTime());
                     ps.setBigDecimal(4, copyTransaction.getSum());
-                    ps.setBigDecimal(5, copyTransaction.getTransactionFee());
+                    ps.setBigDecimal(5, copyTransaction.getFee());
 
                     return ps;
                 }, keyHolder);
@@ -95,7 +94,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     @Override
     public void delete(UUID uuid) {
-        String sql = "DELETE TRANSACTION WHERE UUID = " + uuid;
+        String sql = "DELETE TRANSACTION WHERE UUID = '" + uuid + "'";
         jdbcTemplate.execute(sql);
     }
 

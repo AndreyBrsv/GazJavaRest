@@ -19,7 +19,7 @@ public class DocumentServiceImpl implements DocumentService {
     public Document create(Document document) {
         ValidateUtil.validateDocument(document);
         try {
-            findByNumber(document.getDocumentNumber());
+            findByNumber(document.getNumber());
         } catch (DocumentNotFoundException e) {
             return documentRepository.create(document);
         }

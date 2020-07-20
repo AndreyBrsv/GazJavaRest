@@ -23,7 +23,7 @@ public class TestTest {
     @Test
     public void method() {
         Document document = Document.builder()
-                .documentNumber(111L)
+                .number(111L)
                 .companyName("test")
                 .openDate(Timestamp.from(Instant.now()))
                 .inn("51512")

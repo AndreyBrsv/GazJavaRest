@@ -24,6 +24,7 @@ public class TransactionServiceImpl implements TransactionService {
         ValidateUtil.validateTransaction(transaction);
         Transaction copyTransaction = transaction.copy();
         copyTransaction.setUuid(UUID.randomUUID());
+        copyTransaction.setTime(Timestamp.from(Instant.now()));
         return transactionRepository.create(copyTransaction);
     }
 
