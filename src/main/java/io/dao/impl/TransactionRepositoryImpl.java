@@ -93,7 +93,14 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     @Override
     public void delete(UUID uuid) {
-        String sql = "DELETE TRANSACTION WHERE UUID = '" + uuid + "'";
+        String sql = "DELETE TRANSACTION WHERE UUID = '?'";
+        jdbcTemplate.update((Connection connection) -> {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setObject(1, uuid);
+
+            return ps;
+        });
+
         jdbcTemplate.execute(sql);
     }
 

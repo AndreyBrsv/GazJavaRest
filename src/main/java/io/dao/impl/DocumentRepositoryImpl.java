@@ -134,8 +134,15 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 
     @Override
     public void delete(Long id) {
-        String sqlDelete = "DELETE DOCUMENTS WHERE ID = " + id;
-        jdbcTemplate.execute(sqlDelete);
+        String sql = "DELETE DOCUMENTS WHERE ID = '?'";
+        jdbcTemplate.update((Connection connection) -> {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setLong(1, id);
+
+            return ps;
+        });
+
+        jdbcTemplate.execute(sql);
     }
 
     @Override
